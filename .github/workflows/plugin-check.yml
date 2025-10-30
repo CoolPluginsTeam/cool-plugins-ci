@@ -1,0 +1,46 @@
+name: WordPress Plugin Check (Reusable Workflow)
+
+on:
+  workflow_call:
+    inputs:
+      plugin-folder:
+        description: "Folder name of the plugin to check"
+        required: true
+        type: string
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout plugin code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp
+
+      - name: Create WordPress test environment
+        run: |
+          mkdir wp-test
+          cd wp-test
+          wp core download --version=6.6
+          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check
+          wp core install --url=https://example.com --title="Plugin Check" \
+            --admin_user=admin --admin_password=admin --admin_email=admin@example.com
+
+      - name: Install Plugin Check Plugin (PCP)
+        run: wp plugin install plugin-check --activate --path=wp-test
+
+      - name: Run Plugin Check
+        run: |
+          mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
+          cp -R . wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
+          wp plugin check ${{ inputs.plugin-folder }} --path=wp-test

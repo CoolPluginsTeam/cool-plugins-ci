@@ -1,0 +1,7 @@
+# Ignore local dev files
+wp-test/
+vendor/
+node_modules/
+.DS_Store
+.idea/
+.env
