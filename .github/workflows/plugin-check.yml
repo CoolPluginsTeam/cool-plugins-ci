@@ -31,16 +31,16 @@ jobs:
         run: |
           mkdir wp-test
           cd wp-test
-          wp core download --version=6.6
-          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check
+          wp core download --version=6.6 --allow-root
+          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check --allow-root
           wp core install --url=https://example.com --title="Plugin Check" \
-            --admin_user=admin --admin_password=admin --admin_email=admin@example.com
+            --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
 
       - name: Install Plugin Check Plugin (PCP)
-        run: wp plugin install plugin-check --activate --path=wp-test
+        run: wp plugin install plugin-check --activate --path=wp-test --allow-root
 
       - name: Run Plugin Check
         run: |
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
           cp -R . wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
-          wp plugin check ${{ inputs.plugin-folder }} --path=wp-test
+          wp plugin check ${{ inputs.plugin-folder }} --path=wp-test --allow-root
