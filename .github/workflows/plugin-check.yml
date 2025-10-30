@@ -14,6 +14,20 @@ jobs:
     env:
       WP_CLI_ALLOW_ROOT: 1
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wp
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
       - name: Checkout plugin code
         uses: actions/checkout@v4
@@ -29,17 +43,24 @@ jobs:
           chmod +x wp-cli.phar
           sudo mv wp-cli.phar /usr/local/bin/wp
 
-      - name: Debug environment
+      - name: Wait for MySQL to be ready
         run: |
-          echo "Current user: $(whoami)"
-          echo "WP_CLI_ALLOW_ROOT=$WP_CLI_ALLOW_ROOT"
+          echo "Waiting for MySQL to start..."
+          for i in {1..15}; do
+            if mysqladmin ping -h127.0.0.1 -uroot -proot --silent; then
+              echo "MySQL is ready!"
+              break
+            fi
+            sleep 2
+          done
 
       - name: Prepare WordPress test environment
         run: |
           mkdir -p wp-test
           cd wp-test
           wp core download --version=6.6 --allow-root
-          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check --allow-root
+          wp config create --dbname=wp --dbuser=root --dbpass=root --dbhost=127.0.0.1 --skip-check --allow-root
+          wp db create --allow-root
           wp core install --url=https://example.com --title="Plugin Check" \
             --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
 
