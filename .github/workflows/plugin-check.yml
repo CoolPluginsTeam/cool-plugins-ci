@@ -60,9 +60,10 @@ jobs:
           cd wp-test
           wp core download --version=6.6 --allow-root
           wp config create --dbname=wp --dbuser=root --dbpass=root --dbhost=127.0.0.1 --skip-check --allow-root
-          wp db create --allow-root
+          wp db query "CREATE DATABASE IF NOT EXISTS wp;" --allow-root
           wp core install --url=https://example.com --title="Plugin Check" \
             --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
+
 
       - name: Install Plugin Check Plugin (PCP)
         working-directory: wp-test
