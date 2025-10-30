@@ -27,9 +27,9 @@ jobs:
           chmod +x wp-cli.phar
           sudo mv wp-cli.phar /usr/local/bin/wp
 
-      - name: Create WordPress test environment
+      - name: Prepare WordPress test environment
         run: |
-          mkdir wp-test
+          mkdir -p wp-test
           cd wp-test
           wp core download --version=6.6 --allow-root
           wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check --allow-root
@@ -37,10 +37,14 @@ jobs:
             --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
 
       - name: Install Plugin Check Plugin (PCP)
-        run: wp plugin install plugin-check --activate --path=wp-test --allow-root
+        working-directory: wp-test
+        run: wp plugin install plugin-check --activate --allow-root
 
-      - name: Run Plugin Check
+      - name: Copy Plugin for Testing
         run: |
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
           cp -R . wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
-          wp plugin check ${{ inputs.plugin-folder }} --path=wp-test --allow-root
+
+      - name: Run Plugin Check
+        working-directory: wp-test
+        run: wp plugin check ${{ inputs.plugin-folder }} --allow-root
