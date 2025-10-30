@@ -12,39 +12,50 @@ jobs:
   plugin-check:
     runs-on: ubuntu-latest
 
+    # ✅ This allows WP-CLI to run safely as root (needed when using `act` on Windows)
+    env:
+      WP_CLI_ALLOW_ROOT: 1
+
     steps:
+      # 1️⃣ Checkout your plugin source code
       - name: Checkout plugin code
         uses: actions/checkout@v4
 
+      # 2️⃣ Set up PHP for WP-CLI
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
+      # 3️⃣ Install WP-CLI globally
       - name: Install WP-CLI
         run: |
           curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
           chmod +x wp-cli.phar
           sudo mv wp-cli.phar /usr/local/bin/wp
 
+      # 4️⃣ Set up a temporary WordPress test environment
       - name: Prepare WordPress test environment
         run: |
           mkdir -p wp-test
           cd wp-test
-          wp core download --version=6.6 --allow-root
-          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check --allow-root
+          wp core download --version=6.6
+          wp config create --dbname=wp --dbuser=root --dbpass=root --skip-check
           wp core install --url=https://example.com --title="Plugin Check" \
-            --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
+            --admin_user=admin --admin_password=admin --admin_email=admin@example.com
 
+      # 5️⃣ Install the Plugin Check plugin
       - name: Install Plugin Check Plugin (PCP)
         working-directory: wp-test
-        run: wp plugin install plugin-check --activate --allow-root
+        run: wp plugin install plugin-check --activate
 
+      # 6️⃣ Copy your plugin folder into the test WordPress setup
       - name: Copy Plugin for Testing
         run: |
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
           cp -R . wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
 
+      # 7️⃣ Run the plugin check on your plugin
       - name: Run Plugin Check
         working-directory: wp-test
-        run: wp plugin check ${{ inputs.plugin-folder }} --allow-root
+        run: wp plugin check ${{ inputs.plugin-folder }}
