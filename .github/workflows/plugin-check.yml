@@ -72,7 +72,8 @@ jobs:
       - name: Copy Plugin for Testing
         run: |
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
-          cp -R . wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
+          rsync -av --exclude='wp-test' --exclude='.git' --exclude='.github' ./ wp-test/wp-content/plugins/${{ inputs.plugin-folder }}/
+
 
       - name: Run Plugin Check
         working-directory: wp-test
