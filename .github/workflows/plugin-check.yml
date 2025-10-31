@@ -76,7 +76,7 @@ jobs:
       - name: Debug plugin files
         run: |
           echo "Listing plugin directory contents..."
-          ls -R wp-test/wp-content/plugins/
+          ls -R wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
 
 
       - name: Run Plugin Check
