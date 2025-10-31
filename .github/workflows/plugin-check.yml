@@ -81,4 +81,10 @@ jobs:
 
       - name: Run Plugin Check
         working-directory: wp-test
-        run: wp plugin check ${{ inputs.plugin-folder }} --allow-root
+        run: wp plugin check ${{ inputs.plugin-folder }} --allow-root | tee "${{ inputs.plugin-folder }}-error-log.txt"
+
+      - name: Debug plugin files after PCP run
+        run: |
+          echo "Listing plugin directory contents after PCP run..."
+          ls -R wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
+
