@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       plugin-folder:
-        description: "Folder name of the plugin to check"
+        description: "Folder name under /wp-content/plugins/ where the repo will be copied"
         required: true
         type: string
 
@@ -45,13 +45,13 @@ jobs:
 
       - name: Wait for MySQL to be ready
         run: |
-          echo "Waiting for MySQL to start..."
-          for i in {1..15}; do
+          echo "⏳ Waiting for MySQL to start..."
+          for i in {1..20}; do
             if mysqladmin ping -h127.0.0.1 -uroot -proot --silent; then
-              echo "MySQL is ready!"
+              echo "✅ MySQL is ready!"
               break
             fi
-            sleep 2
+            sleep 3
           done
 
       - name: Prepare WordPress test environment
@@ -64,7 +64,6 @@ jobs:
           wp core install --url=https://example.com --title="Plugin Check" \
             --admin_user=admin --admin_password=admin --admin_email=admin@example.com --allow-root
 
-
       - name: Install Plugin Check Plugin (PCP)
         working-directory: wp-test
         run: wp plugin install plugin-check --activate --allow-root
@@ -73,7 +72,6 @@ jobs:
         run: |
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
           rsync -av --exclude='wp-test' --exclude='.git' --exclude='.github' ./ wp-test/wp-content/plugins/${{ inputs.plugin-folder }}/
-
 
       - name: Run Plugin Check
         working-directory: wp-test
