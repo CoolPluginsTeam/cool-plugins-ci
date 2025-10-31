@@ -73,6 +73,12 @@ jobs:
           mkdir -p wp-test/wp-content/plugins/${{ inputs.plugin-folder }}
           rsync -av --exclude='wp-test' --exclude='.git' --exclude='.github' ./ wp-test/wp-content/plugins/${{ inputs.plugin-folder }}/
 
+      - name: Debug plugin files
+        run: |
+          echo "Listing plugin directory contents..."
+          ls -R wp-test/wp-content/plugins/
+
+
       - name: Run Plugin Check
         working-directory: wp-test
         run: wp plugin check ${{ inputs.plugin-folder }} --allow-root
