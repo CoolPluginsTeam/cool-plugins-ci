@@ -120,26 +120,27 @@ jobs:
           password: "jebk dviy mqds jocv"
           to: vishabjeetcoolplugins@gmail.com
           from: CoolPlugins CI Bot <aniket.coolplugins@gmail.com>
-          subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }}"
-          convert_markdown: true
+          subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }} Because PCP errors found."
           body: |
-            👋 **Hello CoolPlugins Team,**
-
-            The **WordPress Plugin Check** for plugin  
-            **`${{ inputs.plugin-folder }}`** has **failed** during CI.
-
-            ### 📋 Summary
-            - **Repository:** `${{ github.repository }}`
-            - **Workflow Run:** [View Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            - **Checked Folder:** `${{ inputs.plugin-folder }}`
-
-            ### ⚠️ Detected Issues / Errors
-            ```
-            ${{ steps.read_log.outputs.log_content }}
-            ```
-
-            Best regards,  
-            — 🧠 *CoolPlugins CI Bot*
-
-
+            👋 <strong>Hello CoolPlugins Team,</strong>
+            <br>
+            The <strong>WordPress Plugin Check</strong> for plugin <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because PCP errors found.
+            <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because PCP errors found.  <br> Please fix the errors and try again.
+            <br>
+            <h2>📋 Summary</h2>
+            - <strong>Repository:</strong> `${{ github.repository }}`
+            - <strong>Workflow Run:</strong> [View Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - <strong>Checked Folder:</strong> `${{ inputs.plugin-folder }}`
+            <br>
+            <h2>⚠️ Detected Issues / Errors</h2>
+            <br>
+            <code>
+              <pre style="background:#f6f8fa;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;white-space:pre-wrap;line-height:1.5;">
+                ${{ steps.read_log.outputs.log_content }}
+              </pre>
+            </code>
+            <br>
+            <br>
+            Best regards, <br>
+            — <strong>🧠 CoolPlugins CI Bot</strong>
 
