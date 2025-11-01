@@ -121,8 +121,7 @@ jobs:
           to: vishabjeetcoolplugins@gmail.com
           from: CoolPlugins CI Bot <aniket.coolplugins@gmail.com>
           subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }} Because PCP errors found."
-          convert_markdown: true
-          body: |
+          html_body: |
             👋 <strong>Hello CoolPlugins Team,</strong>
             <br>
             The <strong>WordPress Plugin Check</strong> for plugin <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because PCP errors found.
