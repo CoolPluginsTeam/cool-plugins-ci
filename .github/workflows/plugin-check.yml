@@ -80,8 +80,18 @@ jobs:
 
 
       - name: Run Plugin Check
+        id: run_check
         working-directory: wp-test
-        run: wp plugin check ${{ inputs.plugin-folder }} --allow-root | tee "wp-test/wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt"
+        run: |
+          echo "🧪 Running WordPress Plugin Check for: ${{ inputs.plugin-folder }}"
+      
+          # Create the error-logs directory if it doesn't exist
+          mkdir -p "wp-content/plugins/error-logs"
+      
+          # Run plugin check and save output to plugin-specific log file
+          wp plugin check ${{ inputs.plugin-folder }} --allow-root | tee "wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt"
+      
+          echo "✅ Log saved at: wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt"
 
       - name: Debug plugin files after PCP run
         run: |
