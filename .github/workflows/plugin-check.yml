@@ -124,18 +124,22 @@ jobs:
           html_body: |
             👋 <strong>Hello CoolPlugins Team,</strong>
             <br>
-            The <strong>WordPress Plugin Check</strong> for plugin <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because PCP errors found.
-            <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because PCP errors found.  <br> Please fix the errors and try again.
+            <br>
+            <br>
+            The <strong>PCP</strong> for plugin <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because of errors found. Please fix the errors and try again.
             <br>
             <h2>📋 Summary</h2>
             - <strong>Repository:</strong> `${{ github.repository }}`
+            <br>
             - <strong>Workflow Run:</strong> [View Logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            <br>
             - <strong>Checked Folder:</strong> `${{ inputs.plugin-folder }}`
+            <br>
             <br>
             <h2>⚠️ Detected Issues / Errors</h2>
             <br>
             <code>
-              <pre style="background:#f6f8fa;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;white-space:pre-wrap;line-height:1.5;">
+              <pre style="background:#f6f8fa;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:16px;white-space:pre-wrap;line-height:1.5;">
                 ${{ steps.read_log.outputs.log_content }}
               </pre>
             </code>
