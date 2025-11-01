@@ -98,3 +98,7 @@ jobs:
           echo "Listing plugin directory contents after PCP run..."
           ls -R wp-test/wp-content/plugins/error-logs
 
+      - name: Get Error Log File Content
+        run: |
+          echo "🔍 Error Log File Content:"
+          cat wp-test/wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt
