@@ -125,7 +125,6 @@ jobs:
             👋 <strong>Hello CoolPlugins Team,</strong>
             <br>
             <br>
-            <br>
             The <strong>PCP</strong> for plugin <strong>`${{ inputs.plugin-folder }}`</strong> has <strong>failed</strong> Because of errors found. Please fix the errors and try again.
             <br>
             <h2>📋 Summary</h2>
@@ -139,11 +138,10 @@ jobs:
             <h2>⚠️ Detected Issues / Errors</h2>
             <br>
             <code>
-              <pre style="background:#f6f8fa;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:16px;white-space:pre-wrap;line-height:1.5;">
+              <pre style="background:#f6f8fa;padding:12px;border-radius:8px;font-family:'Courier New',monospace;font-size:15px;white-space:pre-wrap;line-height:1.5;">
                 ${{ steps.read_log.outputs.log_content }}
               </pre>
             </code>
-            <br>
             <br>
             Best regards, <br>
             — <strong>🧠 CoolPlugins CI Bot</strong>
