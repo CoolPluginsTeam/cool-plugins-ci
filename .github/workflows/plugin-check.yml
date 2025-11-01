@@ -124,7 +124,7 @@ jobs:
           body: |
             👋 Hello CoolPlugins Team,
 
-            The **WordPress Plugin Check** for plugin **${{ inputs.plugin-folder }}** has failed during the CI process.
+            The **WordPress Plugin Check** for plugin **${{ inputs.plugin-folder }}** has failed during CI.
 
             📋 **Summary:**
             - Repository: `${{ github.repository }}`
@@ -132,12 +132,13 @@ jobs:
             - Checked Folder: `${{ inputs.plugin-folder }}`
 
             ⚠️ **Detected Issues / Errors:**
-            ----------------------------------------
+            ```
             ${{ steps.read_log.outputs.log_content }}
-            ----------------------------------------
+            ```
 
-            📎 The full log file has also been attached for detailed review.
+            📎 The full log file is attached for your review.
 
             Best regards,  
             — 🧠 *CoolPlugins CI Bot*
           attachments: wp-test/wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt
+
