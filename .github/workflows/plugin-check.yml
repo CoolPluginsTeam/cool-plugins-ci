@@ -116,10 +116,10 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: ${{ secrets.SMTP_USERNAME }}
+          username: ${{ secrets.MAIL_USERNAME }}
           password: "jebk dviy mqds jocv"
           to: vishabjeetcoolplugins@gmail.com
-          from: CoolPlugins CI Bot <${{ secrets.SMTP_USERNAME }}>
+          from: CoolPlugins CI Bot <${{ secrets.MAIL_USERNAME }}>
           subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }} Because PCP errors found."
           html_body: |
             👋 <strong>Hello CoolPlugins Team,</strong>
