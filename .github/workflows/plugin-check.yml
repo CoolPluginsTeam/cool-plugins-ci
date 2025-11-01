@@ -121,6 +121,7 @@ jobs:
           to: vishabjeetcoolplugins@gmail.com
           from: CoolPlugins CI Bot <aniket.coolplugins@gmail.com>
           subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }} Because PCP errors found."
+          convert_markdown: true
           body: |
             👋 <strong>Hello CoolPlugins Team,</strong>
             <br>
