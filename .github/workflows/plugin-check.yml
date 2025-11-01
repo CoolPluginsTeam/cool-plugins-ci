@@ -118,7 +118,7 @@ jobs:
           secure: true
           username: "aniket.coolplugins@gmail.com"
           password: "jebk dviy mqds jocv"
-          to: kesiv91260@ametitas.com
+          to: vishabjeetcoolplugins@gmail.com
           from: CoolPlugins CI Bot <aniket.coolplugins@gmail.com>
           subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }}"
           convert_markdown: true
