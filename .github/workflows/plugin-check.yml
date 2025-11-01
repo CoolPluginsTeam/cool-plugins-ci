@@ -102,3 +102,32 @@ jobs:
         run: |
           echo "🔍 Error Log File Content:"
           cat wp-test/wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt
+          echo SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          echo SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+
+      - name: Send Plugin Check Log via Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "❌ Plugin Check Failed for ${{ inputs.plugin-folder }}"
+          to: kesiv91260@ametitas.com
+          from: CoolPlugins CI Bot <${{ secrets.SMTP_USERNAME }}>
+          body: |
+            Hello CoolPlugins Team 👋,
+  
+            The WordPress Plugin Check for **${{ inputs.plugin-folder }}** has failed.
+  
+            Below is the full log output:
+  
+            ----------------------------------------
+            ${{ steps.read_log.outputs.log_content }}
+            ----------------------------------------
+  
+            Log file attached as well for your records.
+  
+            — CI Bot 🤖
+          attachments: wp-test/wp-content/plugins/error-logs/${{ inputs.plugin-folder }}-error-log.txt
