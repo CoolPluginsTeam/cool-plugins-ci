@@ -116,7 +116,7 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-    username: "aniket.coolplugins@gmail.com"
+          username: "aniket.coolplugins@gmail.com"
           password: "jebk dviy mqds jocv"
           to: kesiv91260@ametitas.com
           from: CoolPlugins CI Bot <aniket.coolplugins@gmail.com>
